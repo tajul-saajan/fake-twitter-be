@@ -12,4 +12,9 @@ class UserRepository
     {
         return User::query()->where('email', $email)->first();
     }
+
+    public function getOneByUserName(string $userName): Model|Builder|null
+    {
+        return User::query()->where('user_name', $userName)->first();
+    }
 }
