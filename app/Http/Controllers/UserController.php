@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
@@ -15,7 +17,7 @@ class UserController extends Controller
     public function search(Request $request): JsonResponse
     {
         $searchKey = $request->query('search');
-        if (!empty($searchKey) || is_null($searchKey)) {
+        if (! empty($searchKey) || is_null($searchKey)) {
             return response()->json([]);
         }
 
@@ -28,5 +30,12 @@ class UserController extends Controller
         }
 
         return response()->json($user);
+    }
+
+    public function follow(User $user): JsonResponse
+    {
+        $authUserId = auth()->user()->id;
+        $this->userRepository->addFollower($user, $authUserId);
+        return response()->json(['message' => 'success'], Response::HTTP_ACCEPTED);
     }
 }
