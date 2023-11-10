@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\TimelineController;
 use App\Http\Controllers\TweetController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -16,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// todo implement dependency inversion principle for all repositories
+
 Route::post('login', [AuthController::class, 'login']);
 
 Route::middleware('auth:api')->group(function () {
@@ -30,5 +33,9 @@ Route::middleware('auth:api')->group(function () {
     Route::group(['prefix' => 'tweets'], function () {
         Route::post('', [TweetController::class, 'store']);
         Route::post('{tweet}/react', [TweetController::class, 'react']);
+    });
+
+    Route::group(['prefix' => 'timeline'], function () {
+        Route::get('', [TimelineController::class, 'index']);
     });
 });

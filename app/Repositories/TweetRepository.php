@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Tweet;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class TweetRepository
 {
@@ -18,5 +19,10 @@ class TweetRepository
     {
         $authUserId = auth()->user()->id;
         $tweet->reactions()->toggle([$authUserId]);
+    }
+
+    public function getTweetsByUsers(array $followingUsers, int $paginationLength): LengthAwarePaginator
+    {
+        return Tweet::query()->whereIn('posted_by', $followingUsers)->paginate($paginationLength);
     }
 }

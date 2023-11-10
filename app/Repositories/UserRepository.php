@@ -32,4 +32,9 @@ class UserRepository
     {
         $user->followers()->detach([$followerId]);
     }
+
+    public function getFollowingUsersIds($userId): array
+    {
+        return User::find($userId)->following->pluck('id')->toArray();
+    }
 }
