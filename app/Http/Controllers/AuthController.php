@@ -37,6 +37,13 @@ class AuthController extends Controller
         return response()->json(auth()->user());
     }
 
+    public function refresh(): JsonResponse
+    {
+        $tokenData = $this->getTokenData(auth()->refresh());
+
+        return response()->json($tokenData);
+    }
+
     private function getTokenData(string $token): array
     {
         return [
