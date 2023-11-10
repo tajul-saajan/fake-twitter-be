@@ -58,6 +58,12 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
+    public function getRouteKeyName(): string
+    {
+        // for user can follow/unfollow by their user_name
+        return 'user_name';
+    }
+
     public function followers(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'follower_user', 'user_id', 'follower_id');
