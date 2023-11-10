@@ -78,4 +78,13 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(Tweet::class, 'posted_by');
     }
+
+    public function reactedTweets(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Tweet::class, 'reactions',
+            'user_id',
+            'tweet_id'
+        )->withTimestamps();
+    }
 }
