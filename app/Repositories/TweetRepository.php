@@ -13,4 +13,10 @@ class TweetRepository
             'posted_by' => $postedBy,
         ]);
     }
+
+    public function react(Tweet $tweet): void
+    {
+        $authUserId = auth()->user()->id;
+        $tweet->reactions()->toggle([$authUserId]);
+    }
 }

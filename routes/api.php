@@ -29,5 +29,6 @@ Route::middleware('auth:api')->group(function () {
 
     Route::group(['prefix' => 'tweets'], function () {
         Route::post('', [TweetController::class, 'store']);
+        Route::post('{tweet}/react', [TweetController::class, 'react']);
     });
 });

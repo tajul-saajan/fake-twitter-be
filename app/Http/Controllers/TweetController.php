@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TweetCreateRequest;
+use App\Models\Tweet;
 use App\Repositories\TweetRepository;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,5 +22,12 @@ class TweetController extends Controller
         $tweet = $this->tweetRepository->create($content, $postedBy);
 
         return response()->json($tweet, Response::HTTP_CREATED);
+    }
+
+    public function react(Tweet $tweet)
+    {
+        $this->tweetRepository->react($tweet);
+
+        return response()->json(['message' => 'success'], Response::HTTP_ACCEPTED);
     }
 }
