@@ -12,14 +12,14 @@ class AuthController extends Controller
 {
     public function __construct(private readonly UserRepository $userRepository)
     {
-        $this->middleware('auth:api', ['except' => ['profile']]);
+        $this->middleware('auth:api', ['except' => ['login']]);
     }
 
     public function login(LoginRequest $request): JsonResponse
     {
         $loginData = $request->only('email', 'password');
         $token = Auth::attempt($loginData);
-        if (!$token) {
+        if (! $token) {
             return response()->json(['message' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
         }
 
