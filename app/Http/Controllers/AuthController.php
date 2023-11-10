@@ -19,7 +19,7 @@ class AuthController extends Controller
     {
         $loginData = $request->only('email', 'password');
         $token = Auth::attempt($loginData);
-        if (! $token) {
+        if (!$token) {
             return response()->json(['message' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
         }
 
