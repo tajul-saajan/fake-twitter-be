@@ -12,6 +12,7 @@ class AuthController extends Controller
 {
     public function __construct(private readonly UserRepository $userRepository)
     {
+        $this->middleware('auth:api', ['except' => ['profile']]);
     }
 
     public function login(LoginRequest $request): JsonResponse
@@ -31,6 +32,10 @@ class AuthController extends Controller
         ]);
     }
 
+    public function profile(): JsonResponse
+    {
+        return response()->json(auth()->user());
+    }
 
     private function getTokenData(string $token): array
     {
