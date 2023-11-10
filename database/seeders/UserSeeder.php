@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
         foreach ($demoUsers as $user) {
             User::create([
                 ...$user,
-                'password' => $password
+                'password' => $password,
             ]);
         }
     }
