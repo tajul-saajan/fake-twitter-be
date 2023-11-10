@@ -36,6 +36,15 @@ class UserController extends Controller
     {
         $authUserId = auth()->user()->id;
         $this->userRepository->addFollower($user, $authUserId);
+
+        return response()->json(['message' => 'success'], Response::HTTP_ACCEPTED);
+    }
+
+    public function unfollow(User $user): JsonResponse
+    {
+        $authUserId = auth()->user()->id;
+        $this->userRepository->removeFollower($user, $authUserId);
+
         return response()->json(['message' => 'success'], Response::HTTP_ACCEPTED);
     }
 }

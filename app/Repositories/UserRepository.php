@@ -27,4 +27,9 @@ class UserRepository
             ],
         ]);
     }
+
+    public function removeFollower(User $user, int $followerId): void
+    {
+        $user->followers()->detach([$followerId]);
+    }
 }
