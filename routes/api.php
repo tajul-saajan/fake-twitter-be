@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\TweetController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,5 +25,9 @@ Route::middleware('auth:api')->group(function () {
         Route::get('', [UserController::class, 'search']);
         Route::post('{user}/follow', [UserController::class, 'follow']);
         Route::post('{user}/unfollow', [UserController::class, 'unfollow']);
+    });
+
+    Route::group(['prefix' => 'tweets'], function () {
+        Route::post('', [TweetController::class, 'store']);
     });
 });
