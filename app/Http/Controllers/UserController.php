@@ -2,23 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\contracts\UserRepositoryInterface;
 use App\Exceptions\UserFollowException;
 use App\Models\User;
-use App\Repositories\UserRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
-    public function __construct(private readonly UserRepository $userRepository)
+    public function __construct(private readonly UserRepositoryInterface $userRepository)
     {
     }
 
     public function search(Request $request): JsonResponse
     {
         $searchKey = $request->query('search');
-        if (! empty($searchKey) || is_null($searchKey)) {
+        if (empty($searchKey)) {
             return response()->json([]);
         }
 

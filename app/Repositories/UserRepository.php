@@ -2,11 +2,12 @@
 
 namespace App\Repositories;
 
+use App\contracts\UserRepositoryInterface;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
-class UserRepository
+class UserRepository implements UserRepositoryInterface
 {
     public function getByEmail(string $email): Model|Builder
     {

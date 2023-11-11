@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\contracts\UserRepositoryInterface;
 use App\Http\Requests\LoginRequest;
-use App\Repositories\UserRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
 {
-    public function __construct(private readonly UserRepository $userRepository)
+    public function __construct(private readonly UserRepositoryInterface $userRepository)
     {
         $this->middleware('auth:api', ['except' => ['login']]);
     }

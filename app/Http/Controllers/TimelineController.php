@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\TweetRepository;
-use App\Repositories\UserRepository;
+use App\contracts\TweetRepositoryInterface;
+use App\contracts\UserRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 
 class TimelineController extends Controller
 {
     const PAGINATION_LENGTH = 15;
 
-    public function __construct(private readonly TweetRepository $tweetRepository, private readonly UserRepository $userRepository)
+    public function __construct(private readonly TweetRepositoryInterface $tweetRepository, private readonly UserRepositoryInterface $userRepository)
     {
     }
 

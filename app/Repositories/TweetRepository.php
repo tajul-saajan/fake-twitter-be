@@ -2,10 +2,11 @@
 
 namespace App\Repositories;
 
+use App\contracts\TweetRepositoryInterface;
 use App\Models\Tweet;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
-class TweetRepository
+class TweetRepository implements TweetRepositoryInterface
 {
     public function create(string $content, int $postedBy): Tweet
     {

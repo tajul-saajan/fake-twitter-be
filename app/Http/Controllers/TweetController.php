@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\contracts\TweetRepositoryInterface;
 use App\Http\Requests\TweetCreateRequest;
 use App\Models\Tweet;
-use App\Repositories\TweetRepository;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class TweetController extends Controller
 {
-    public function __construct(private readonly TweetRepository $tweetRepository)
+    public function __construct(private readonly TweetRepositoryInterface $tweetRepository)
     {
     }
 

@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// todo implement dependency inversion principle for all repositories
 
 Route::post('login', [AuthController::class, 'login']);
 
