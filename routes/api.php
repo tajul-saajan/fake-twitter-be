@@ -17,11 +17,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
 Route::post('login', [AuthController::class, 'login']);
 
 Route::middleware('auth:api')->group(function () {
     Route::get('profile', [AuthController::class, 'profile']);
+    Route::post('refresh', [AuthController::class, 'refresh']);
 
     Route::group(['prefix' => 'users'], function () {
         Route::get('', [UserController::class, 'search']);
