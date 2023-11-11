@@ -24,6 +24,9 @@ class TweetRepository implements TweetRepositoryInterface
 
     public function getTweetsByUsers(array $followingUsers, int $paginationLength): LengthAwarePaginator
     {
-        return Tweet::query()->whereIn('posted_by', $followingUsers)->paginate($paginationLength);
+        return Tweet::query()
+            ->whereIn('posted_by', $followingUsers)
+            ->orderBy('created_at', 'desc')
+            ->paginate($paginationLength);
     }
 }
