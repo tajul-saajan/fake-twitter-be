@@ -17,6 +17,8 @@ class Tweet extends Model
         'updated_at',
     ];
 
+    protected $appends = ['created_by'];
+
     public function postedBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'posted_by');
@@ -29,5 +31,10 @@ class Tweet extends Model
             'tweet_id',
             'user_id'
         )->withTimestamps();
+    }
+
+    public function getCreatedByAttribute()
+    {
+        return $this->postedBy;
     }
 }

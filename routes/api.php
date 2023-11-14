@@ -25,6 +25,8 @@ Route::middleware('auth:api')->group(function () {
 
     Route::group(['prefix' => 'users'], function () {
         Route::get('', [UserController::class, 'search']);
+        Route::get('{user}/profile', [UserController::class, 'profile']);
+
         Route::post('{user}/follow', [UserController::class, 'follow']);
         Route::post('{user}/unfollow', [UserController::class, 'unfollow']);
     });

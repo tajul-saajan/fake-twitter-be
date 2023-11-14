@@ -58,4 +58,10 @@ class UserController extends Controller
 
         return response()->json(['message' => 'success'], Response::HTTP_ACCEPTED);
     }
+
+    public function profile(User $user): JsonResponse
+    {
+        $user->load('tweets');
+        return response()->json($user);
+    }
 }
