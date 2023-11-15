@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Tweet;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Log;
 use Tests\TestCase;
 
 class TimelineTest extends TestCase
@@ -35,12 +36,13 @@ class TimelineTest extends TestCase
             ])
             ->get('api/timeline');
 
-        $content = json_decode($response->content(), true);
         $response->assertOk();
+        $content = json_decode($response->content(), true);
 
         $tweets = $content['data'];
+        Log::debug(print_r($tweets, true));
         foreach ($tweets as $tweet) {
-            $this->assertEquals($tweet['posted_by'], $user2->id);
+            $this->assertEquals($tweet['posted_by']['id'], $user2->id);
         }
 
         $this->assertCount(3, $tweets);
