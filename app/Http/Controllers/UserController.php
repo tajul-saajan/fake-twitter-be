@@ -7,6 +7,7 @@ use App\Exceptions\UserFollowException;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
@@ -19,16 +20,20 @@ class UserController extends Controller
     {
         $searchKey = $request->query('search');
         if (empty($searchKey)) {
-            return response()->json([]);
+            return response()->json();
         }
 
-        $isEmail = filter_var($searchKey, FILTER_VALIDATE_EMAIL);
-        // @todo scope for cache implementation
-        if ($isEmail) {
-            $user = $this->userRepository->getByEmail($searchKey);
-        } else {
-            $user = $this->userRepository->getOneByUserName($searchKey);
-        }
+        $user = Cache::remember($searchKey, now()->addDays(5), function () use ($searchKey) {
+            // @todo add cache invalidation when username or email update functionality is added
+            // @todo add remember when user create functionality is added
+
+            $isEmail = filter_var($searchKey, FILTER_VALIDATE_EMAIL);
+            if ($isEmail) {
+                return $this->userRepository->getByEmail($searchKey);
+            }
+
+            return $this->userRepository->getOneByUserName($searchKey);
+        });
 
         return response()->json($user);
     }
@@ -62,6 +67,7 @@ class UserController extends Controller
     public function profile(User $user): JsonResponse
     {
         $user->load('tweets');
+
         return response()->json($user);
     }
 }
