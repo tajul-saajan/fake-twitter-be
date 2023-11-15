@@ -16,8 +16,13 @@ class TimelineController extends Controller
 
     public function index(): JsonResponse
     {
-        $followingUsersIds = $this->userRepository->getFollowingUsersIds(auth()->user()->id);
-        $tweets = $this->tweetRepository->getTweetsByUsers($followingUsersIds, self::PAGINATION_LENGTH);
+        $authUserId = auth()->user()->id;
+        $followingUsersIds = $this->userRepository->getFollowingUsersIds($authUserId);
+        $tweets = $this->tweetRepository
+            ->getTweetsByUsers(
+                [...$followingUsersIds, $authUserId],
+                self::PAGINATION_LENGTH
+            );
 
         return response()->json($tweets);
     }
