@@ -27,6 +27,9 @@ Route::middleware('auth:api')->group(function () {
         Route::get('', [UserController::class, 'search']);
         Route::get('{user}/profile', [UserController::class, 'profile']);
 
+        Route::get('{user}/followers', [UserController::class, 'followers']);
+        Route::get('{user}/following', [UserController::class, 'following']);
+
         Route::post('{user}/follow', [UserController::class, 'follow']);
         Route::post('{user}/unfollow', [UserController::class, 'unfollow']);
     });

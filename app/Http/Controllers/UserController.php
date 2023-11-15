@@ -70,4 +70,14 @@ class UserController extends Controller
 
         return response()->json($user);
     }
+
+    public function followers(User $user): JsonResponse
+    {
+        return response()->json($user->followers);
+    }
+
+    public function following(User $user): JsonResponse
+    {
+        return response()->json($user->following);
+    }
 }
